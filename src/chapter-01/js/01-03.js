@@ -9,7 +9,8 @@ function init() {
   var renderer = new THREE.WebGLRenderer();
   renderer.setClearColor(new THREE.Color(0x000000));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  // renderer.shadowMap.enabled = true;
+  // render需要开启shadow
+  renderer.shadowMap.enabled = true;
 
   // createTree(scene);
   // createHouse(scene);
@@ -18,6 +19,7 @@ function init() {
 
   // create a cube
   var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
+
   var cubeMaterial = new THREE.MeshLambertMaterial({
     color: 0xFF0000
   });
@@ -32,6 +34,7 @@ function init() {
   // add the cube to the scene
 
   var sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
+  // lamber材质可以被灯光照亮
   var sphereMaterial = new THREE.MeshLambertMaterial({
     color: 0x7777ff
   });
@@ -41,6 +44,7 @@ function init() {
   sphere.position.x = 20;
   sphere.position.y = 4;
   sphere.position.z = 2;
+  //开启投射阴影
   sphere.castShadow = true;
 
   // create the ground plane
@@ -53,6 +57,8 @@ function init() {
   // rotate and position the plane
   plane.rotation.x = -0.5 * Math.PI;
   plane.position.set(15, 0, 0);
+  // 圆球sphere开启castShadow，需要平面plane开启（接收阴影）receiveShadow,才能正常显示阴影。
+  // 圆球sphere的阴影 投射在 平面plane上
   plane.receiveShadow = true;
 
   // add the objects
@@ -67,18 +73,22 @@ function init() {
   camera.lookAt(scene.position);
 
   // add spotlight for the shadows
+  //spotLight类似台灯灯光
   var spotLight = new THREE.SpotLight(0xFFFFFF);
   spotLight.position.set(-40, 40, -15);
+  // 灯光也需要开启castShadow投射阴影
   spotLight.castShadow = true;
+  //1024，阴影相对粗糙，可以增大值使阴影变精细
   spotLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
   spotLight.shadow.camera.far = 130;
   spotLight.shadow.camera.near = 40;
 
-  // If you want a more detailled shadow you can increase the 
+  // If you want a more detailled shadow you can increase the
   // mapSize used to draw the shadows.
   // spotLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
   scene.add(spotLight);
 
+  // 环境光
   var ambienLight = new THREE.AmbientLight(0x353535);
   scene.add(ambienLight);
 

@@ -1,6 +1,7 @@
 function init() {
 
     // listen to the resize events
+    // 添加resize的监听
     window.addEventListener('resize', onResize, false);
 
     var camera;
@@ -17,7 +18,7 @@ function init() {
     // create a camera, which defines where we're looking at.
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-    
+
 
     // create a render and set the size
     renderer = new THREE.WebGLRenderer();
@@ -30,7 +31,7 @@ function init() {
     var trackballControls = initTrackballControls(camera, renderer);
     var clock = new THREE.Clock();
 
-        
+
     // create the ground plane
     var planeGeometry = new THREE.PlaneGeometry(60, 20, 1, 1);
     var planeMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
@@ -128,8 +129,10 @@ function init() {
     }
 
     function onResize() {
+        // 赋值相机的长宽比，并更新
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
+        // 重设画布的长宽比
         renderer.setSize(window.innerWidth, window.innerHeight);
-    }    
+    }
 }

@@ -79,6 +79,7 @@ function init() {
         stats.update();
 
         // rotate the cube around its axes
+        // 立方体 沿着不同的轴旋转
         cube.rotation.x += 0.02;
         cube.rotation.y += 0.02;
         cube.rotation.z += 0.02;
@@ -87,8 +88,11 @@ function init() {
         step += 0.04;
         sphere.position.x = 20 + (10 * (Math.cos(step)));
         sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)));
+        // 修改为下方代码，圆球可做圆周运动。cos和sin对象变化，x快y就慢，y快x就慢。这跟圆周运动规律吻合
+        // sphere.position.y = 2 + (10 * Math.sin(step));
 
         // render using requestAnimationFrame
+        //requestAnimationFrame平均1/60秒调用一次当前函数。使得上方数据重新计算后，渲染器进行渲染
         requestAnimationFrame(renderScene);
         renderer.render(scene, camera);
     }

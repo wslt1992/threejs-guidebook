@@ -83,12 +83,15 @@ function init() {
         this.bouncingSpeed = 0.03;
     };
 
+    // 改变变量的控制界面
     var gui = new dat.GUI();
+    // 添加控制变量选项
     gui.add(controls, 'rotationSpeed', 0, 0.5);
     gui.add(controls, 'bouncingSpeed', 0, 0.5);
 
 
     // attach them here, since appendChild needs to be called first
+    //监听鼠标移动，用来移动视角
     var trackballControls = initTrackballControls(camera, renderer);
     var clock = new THREE.Clock();
 
@@ -96,9 +99,12 @@ function init() {
 
     function render() {
         // update the stats and the controls
+        // clock.getDelta()获取两次执行的时间差
+        // 更新轨迹球控制器
         trackballControls.update(clock.getDelta());
         stats.update();
-        
+
+        // 使用控制变量的值为每一步的 新增值
         // rotate the cube around its axes
         cube.rotation.x += controls.rotationSpeed;
         cube.rotation.y += controls.rotationSpeed;
